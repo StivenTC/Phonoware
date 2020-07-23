@@ -1,0 +1,63 @@
+//Any generic styles for the site. Shouldn't have any classes or ids for selectors.
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  font-family: $font;
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
+}
+
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+select,
+option,
+input[type="radio"] {
+  cursor: pointer;
+}
+
+select {
+  background: url('data:image/svg+xml;utf8,<svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L6 6L11 1" stroke="black" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat 95% 50%;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: 800;
+  }
+}
+
+h1,
+h2 {
+  font-weight: bold;
+}

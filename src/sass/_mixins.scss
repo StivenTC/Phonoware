@@ -1,0 +1,6 @@
+//Any mixins (style snippets) that will be used over and over
+@mixin vert-center {
+  display: flex;
+  justify-content: center;
+  //align-items: center;
+}
