@@ -1,5 +1,42 @@
 .home {
   text-align: center;
+  height: 100vh;
 
-  .content {}
+  .content {
+    margin-top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .roll {
+      &-word {
+        display: flex;
+        position: relative;
+        height: 100%;
+        padding: .5em 1em;
+        width: fit-content;
+        font-size: x-large;
+        font-family: monospace;
+        border: thick solid #333;
+        color: #333;
+        letter-spacing: 1em;
+        padding-right: 0;
+      }
+
+      &-letter {
+        .arrow {
+          position: absolute;
+          background: transparent;
+
+          &-top {
+            top: -1.5em;
+          }
+
+          &-bottom {
+            bottom: -1.5em;
+          }
+        }
+      }
+    }
+  }
 }
