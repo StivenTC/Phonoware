@@ -1,32 +1,59 @@
 .home {
   text-align: center;
   height: 100vh;
+  width: 100vw;
+  position: fixed;
+
+  .header {
+    margin-top: 20px;
+    position: relative;
+
+    h1 {
+      font-size: xx-large;
+      color: #333;
+    }
+
+    .current-word {
+      margin-top: .5em;
+      font-size: larger;
+    }
+
+    .count-words {
+      margin-top: .5em;
+      font-size: x-large;
+    }
+
+    .lifes {
+      margin-top: 2em;
+      top: .5em;
+      right: 1em;
+      color: red;
+    }
+  }
 
   .content {
-    margin-top: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-top: 100px;
 
     .roll {
       &-word {
         display: flex;
         position: relative;
-        height: 100%;
-        padding: .5em 1em;
+        margin: auto;
+        padding: .5em 0 .5em 1em;
         width: fit-content;
-        font-size: x-large;
+        font-size: xx-large;
         font-family: monospace;
         border: thick solid #333;
         color: #333;
         letter-spacing: 1em;
-        padding-right: 0;
       }
 
       &-letter {
         .arrow {
           position: absolute;
           background: transparent;
+          font-size: xx-large;
+          margin-left: -.2em;
 
           &-top {
             top: -1.5em;
@@ -37,6 +64,29 @@
           }
         }
       }
+    }
+
+    .check-word {
+      margin-top: 5em;
+
+      button {
+        border: 1px solid #333;
+        padding: .5em 1em;
+        font-size: 1em;
+
+        &:active {
+          background: #333;
+        }
+
+        &:disabled {
+          border-color: transparent;
+          opacity: .8;
+        }
+      }
+    }
+
+    .list-word {
+      margin-top: 30px;
     }
   }
 }
