@@ -104,7 +104,7 @@ function Home() {
       {lifes === 0 ?
         <div className="lose-page">
           <p>Perdiste</p>
-          <img src={require('../../assets/fail.jpeg')} alt="fail" />
+          {/* <img src={require('../../assets/fail.jpeg')} alt="fail" /> */}
           <button type="button" onClick={() => setLifes(3)}>Otra vez</button>
         </div> :
 
