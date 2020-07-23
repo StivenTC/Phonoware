@@ -6,7 +6,9 @@ function Home() {
   const [listWords, setListWords] = useState([initWord]) //LIStado palabras completadas  
 
   const [lifes, setLifes] = useState(3);
+
   const [isLoading, setLoading] = useState(false);
+  const [userMsg, setUserMsg] = useState({ msg: '', type: 'error' });
 
   const [lastWordPosition, setLastWordPosition] = useState(-1);
   const abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -58,23 +60,32 @@ function Home() {
       response = response.substring(response.search('<title>'), response.search('</title>'))
 
       if (!response.includes('| Edición del Tricentenario |')) {
+        showUserMsg('¡Correcto!', 'correct')
         arrayWords.push(showWord)
         setListWords(arrayWords)
         setInitWord(showWord)
       } else {
-        setLifes(lifes - 1)
-        if (lifes === 0) {
-          resetWord()
+        if (lifes > 0) {
+          showUserMsg('Nope, -1 vida ', 'error')
+          setLifes(lifes - 1)
         }
         setInitWord(initWord)
       }
     } else {
+      showUserMsg('Repetida', 'error')
       resetWord()
       if (lifes !== 1) {
         setLifes(lifes - 1)
       }
     }
     setLoading(false)
+  }
+
+  const showUserMsg = (msg, type) => {
+    setUserMsg({ msg: msg, type: type })
+
+    setTimeout(function () { setUserMsg({ msg: '', type: '' }); }, 2000);
+
   }
 
   return (
@@ -88,39 +99,47 @@ function Home() {
         </div>
         <div className="count-words">{listWords.length - 1}</div>
         <div className="current-word">{showWord}</div>
+        <div className={`user-msg user-msg-${userMsg.type}`}>{userMsg.msg}</div>
       </div>
+      {lifes === 0 ?
+        <div className="lose-page">
+          <p>Perdiste</p>
+          <img src={require('../../assets/fail.jpeg')} alt="fail" />
+          <button type="button" onClick={() => setLifes(3)}>Otra vez</button>
+        </div> :
 
-      <div className="content">
-        <div className="roll-word">
-          {[...Array(initWord.length)].map((e, i) =>
-            <div className="roll-letter" key={i}>
-              {
-                abc.map((item, j) =>
-                  currentWord[i] === item &&
-                  <div key={j}>
-                    <button type="button" disabled={isLoading} className="arrow arrow-top" onClick={() => changeLetter('top', i, j)}>▲</button>
-                    <button type="button" disabled={isLoading} className="arrow arrow-bottom" onClick={() => changeLetter('bottom', i, j)}>▼</button>
-                    <span>{item}</span>
-                  </div>
-                )}
+        <div className="content">
+          <div className="roll-word">
+            {[...Array(initWord.length)].map((e, i) =>
+              <div className="roll-letter" key={i}>
+                {
+                  abc.map((item, j) =>
+                    currentWord[i] === item &&
+                    <div key={j}>
+                      <button type="button" disabled={isLoading} className="arrow arrow-top" onClick={() => changeLetter('top', i, j)}>▲</button>
+                      <button type="button" disabled={isLoading} className="arrow arrow-bottom" onClick={() => changeLetter('bottom', i, j)}>▼</button>
+                      <span>{item}</span>
+                    </div>
+                  )}
+              </div>
+
+            )}
+          </div>
+          <div className="check-content">
+            <div className="check-word">
+              {isLoading ?
+                <p>Verificando...</p> :
+                <button type="button" disabled={showWord === initWord || isLoading} onClick={checkWord}>Verificar</button>
+              }
             </div>
-
-          )}
-        </div>
-        <div className="check-content">
-          <div className="check-word">
-            {isLoading ?
-              <p>Verificando...</p> :
-              <button type="button" disabled={showWord === initWord || isLoading} onClick={checkWord}>Verificar</button>
-            }
+          </div>
+          <div className="list-word">
+            {listWords.map((item, i) =>
+              <p key={i}>{item}</p>
+            )}
           </div>
         </div>
-        <div className="list-word">
-          {listWords.map((item, i) =>
-            <p key={i}>{item}</p>
-          )}
-        </div>
-      </div>
+      }
     </div>
   );
 }

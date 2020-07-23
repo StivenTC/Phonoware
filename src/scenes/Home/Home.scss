@@ -29,6 +29,23 @@
       right: 1em;
       color: red;
     }
+
+    .user-msg {
+      height: 1em;
+      margin-top: 1em;
+      color: transparent;
+      transition: all .5s ease-in-out;
+
+      &-error {
+        color: red;
+
+      }
+
+      &-correct {
+        color: green;
+      }
+    }
+
   }
 
   .content {
@@ -85,8 +102,28 @@
       }
     }
 
+
     .list-word {
       margin-top: 30px;
     }
   }
+
+  .lose-page {
+    text-align: center;
+
+    img {
+      width: 60%;
+      margin: 20px auto;
+    }
+
+    button {
+      margin: auto;
+      display: block;
+      color: teal;
+      font-size: larger;
+      background: transparent;
+      border-bottom: 1px solid teal;
+    }
+  }
+
 }
