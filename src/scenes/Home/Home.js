@@ -14,7 +14,7 @@ function Home() {
   const [lastWordPosition, setLastWordPosition] = useState(-1);
 
   const abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-  const words = ["rosas", "casa", "libro", "pelota", "notario", "color", "rosca"]
+  const words = ["rosas", "casa", "libro", "pelota", "codo", "color", "rosca", "mesa", "mono", "abogado"]
 
   useEffect(() => {
     restartGame()
@@ -47,8 +47,9 @@ function Home() {
   }
 
   const resetWord = () => {
-    setCurrentWord(initWord.split(''))
-    setShowWord(initWord)
+    let lastWord = listWords[listWords.length - 1]
+    setCurrentWord(lastWord.split(''))
+    setShowWord(lastWord)
   }
 
   const restartGame = () => {
@@ -97,10 +98,10 @@ function Home() {
           showUserMsg('Nope, -1 vida ', 'error')
           setLifes(lifes - 1)
         }
-        setInitWord(initWord)
+        setInitWord(listWords[listWords.length - 1])
       }
     } else {
-      showUserMsg('Repetida', 'error')
+      showUserMsg('Ups, repetida', 'error')
       resetWord()
       if (lifes !== 1) {
         setLifes(lifes - 1)
@@ -156,7 +157,7 @@ function Home() {
             <div className="check-word">
               {isLoading ?
                 <p>Verificando...</p> :
-                <button type="button" disabled={showWord === initWord || isLoading} onClick={checkWord}>Verificar</button>
+                <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWord}>Verificar</button>
               }
             </div>
           </div>
