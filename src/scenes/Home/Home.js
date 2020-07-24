@@ -112,7 +112,7 @@ function Home() {
   return (
     <div className="home">
       <div className="header">
-        <h1>PhoneWare</h1>
+        <h1>PhonoWare</h1>
         <div className="lifes">{
           [...Array(lifes)].map((item, i) =>
             <span key={i}>♥</span>
