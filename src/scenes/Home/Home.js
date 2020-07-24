@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 function Home() {
-  const [initWord, setInitWord] = useState('rosas'); //palabra inicial
+
+  const [initWord, setInitWord] = useState(""); //palabra inicial
   const [showWord, setShowWord] = useState(initWord); //palabra mostrada para render
   const [currentWord, setCurrentWord] = useState(initWord.split('')); //palabra cambiando
-  const [listWords, setListWords] = useState([initWord]) //LIStado palabras completadas  
+  const [listWords, setListWords] = useState([]) //LIStado palabras completadas  
 
   const [lifes, setLifes] = useState(3);
 
@@ -11,7 +12,13 @@ function Home() {
   const [userMsg, setUserMsg] = useState({ msg: '', type: 'error' });
 
   const [lastWordPosition, setLastWordPosition] = useState(-1);
+
   const abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+  const words = ["rosas", "casa", "libro", "pelota", "notario", "color", "rosca"]
+
+  useEffect(() => {
+    restartGame()
+  }, [initWord]);
 
   const changeLetter = (direction, positionWord, positionLetter) => {
     let countLetter = positionLetter
@@ -44,6 +51,19 @@ function Home() {
     setShowWord(initWord)
   }
 
+  const restartGame = () => {
+    let max = words.length
+    let min = 0
+    let rn = Math.floor(Math.random() * (max - min)) + min
+    let newWord = words[rn]
+    setInitWord(newWord)
+    setCurrentWord(initWord.split(''))
+    setShowWord(initWord)
+    setListWords([initWord])
+    setLifes(3)
+  }
+
+
   async function verifyWordRae() {
     console.log(showWord)
     const response = await fetch('https://cors-anywhere.herokuapp.com/https://dle.rae.es/' + showWord);
@@ -64,6 +84,9 @@ function Home() {
         arrayWords.push(showWord)
         setListWords(arrayWords)
         setInitWord(showWord)
+        if (Number.isInteger((listWords.length - 1) / 40)) {
+          setLifes(lifes + 1)
+        }
       } else {
         if (lifes > 0) {
           showUserMsg('Nope, -1 vida ', 'error')
@@ -83,9 +106,7 @@ function Home() {
 
   const showUserMsg = (msg, type) => {
     setUserMsg({ msg: msg, type: type })
-
     setTimeout(function () { setUserMsg({ msg: '', type: '' }); }, 2000);
-
   }
 
   return (
@@ -94,7 +115,7 @@ function Home() {
         <h1>PhoneWare</h1>
         <div className="lifes">{
           [...Array(lifes)].map((item, i) =>
-            <span>♥</span>
+            <span key={i}>♥</span>
           )}
         </div>
         <div className="count-words">{listWords.length - 1}</div>
@@ -105,7 +126,8 @@ function Home() {
         <div className="lose-page">
           <p>Perdiste</p>
           {/* <img src={require('../../assets/fail.jpeg')} alt="fail" /> */}
-          <button type="button" onClick={() => setLifes(3)}>Otra vez</button>
+          <br />
+          <button type="button" onClick={restartGame}>Otra vez</button>
         </div> :
 
         <div className="content">
