@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 function Home() {
 
-  const [initWord, setInitWord] = useState(""); //palabra inicial
-  const [showWord, setShowWord] = useState(initWord); //palabra mostrada para render
-  const [currentWord, setCurrentWord] = useState(initWord.split('')); //palabra cambiando
-  const [listWords, setListWords] = useState([]) //LIStado palabras completadas  
+  const [initWord, setInitWord] = useState(""); //Palabra inicial
+  const [showWord, setShowWord] = useState(''); //Palabra mostrada para render
+  const [currentWord, setCurrentWord] = useState(''); //palabra cambiando
+  const [listWords, setListWords] = useState([]) //Listado palabras completadas  
 
-  const [lifes, setLifes] = useState(3);
+  const [lifes, setLifes] = useState(0);
 
   const [isLoading, setLoading] = useState(false);
   const [userMsg, setUserMsg] = useState({ msg: '', type: 'error' });
 
   const [lastWordPosition, setLastWordPosition] = useState(-1);
 
-  const abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+  const abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
   const words = ["rosas", "casa", "libro", "pelota", "notario", "color", "rosca"]
 
   useEffect(() => {
@@ -23,7 +23,8 @@ function Home() {
   const changeLetter = (direction, positionWord, positionLetter) => {
     let countLetter = positionLetter
     let newWord = currentWord
-    let originalLetter = initWord.split('')[lastWordPosition]
+    let lastWord = listWords[listWords.length - 1]
+    let originalLetter = lastWord.split('')[lastWordPosition]
 
     if (lastWordPosition !== positionWord) {
       newWord[lastWordPosition] = originalLetter
@@ -39,7 +40,6 @@ function Home() {
       if (countLetter > abc.length - 1)
         countLetter = 0
     }
-
     setLastWordPosition(positionWord)
     newWord[positionWord] = abc[countLetter]
     setCurrentWord(newWord)
@@ -52,6 +52,8 @@ function Home() {
   }
 
   const restartGame = () => {
+    console.log("entro")
+    console.log(lifes)
     let max = words.length
     let min = 0
     let rn = Math.floor(Math.random() * (max - min)) + min
@@ -61,6 +63,7 @@ function Home() {
     setShowWord(initWord)
     setListWords([initWord])
     setLifes(3)
+    console.log("salió")
   }
 
 
@@ -80,12 +83,14 @@ function Home() {
       response = response.substring(response.search('<title>'), response.search('</title>'))
 
       if (!response.includes('| Edición del Tricentenario |')) {
-        showUserMsg('¡Correcto!', 'correct')
         arrayWords.push(showWord)
         setListWords(arrayWords)
-        setInitWord(showWord)
+        //setInitWord(showWord)
         if (Number.isInteger((listWords.length - 1) / 40)) {
+          showUserMsg('¡Correcto! Toma otra vida', 'correct')
           setLifes(lifes + 1)
+        } else {
+          showUserMsg('¡Correcto!', 'correct')
         }
       } else {
         if (lifes > 0) {
