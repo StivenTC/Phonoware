@@ -116,7 +116,7 @@ function Game() {
   }
 
   return (
-    <div className="home">
+    <div className="game">
       <div className="header">
         <h1>PhonoWare</h1>
         <div className="lifes">{

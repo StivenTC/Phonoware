@@ -12,7 +12,8 @@ export default function BasicExample() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Game} />
+        <Route exact path="/" component={Home} />
+        <Route path="/game" component={Game} />
       </Switch>
     </Router>
   );

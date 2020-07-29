@@ -1,138 +1,17 @@
 .home {
   text-align: center;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
 
-  .header {
-    margin-top: 20px;
-    position: relative;
+  &-header {}
 
-    h1 {
-      font-size: xx-large;
-      color: #333;
-    }
+  &-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10em;
 
-    .current-word {
-      margin-top: .5em;
-      font-size: larger;
-    }
-
-    .count-words {
-      margin-top: .5em;
-      font-size: x-large;
-    }
-
-    .lifes {
-      margin-top: 2em;
-      top: .5em;
-      right: 1em;
-      color: red;
-    }
-
-    .user-msg {
-      height: 1em;
-      margin-top: 1em;
-      color: transparent;
-      transition: all .5s ease-in-out;
-
-      &-error {
-        color: red;
-
-      }
-
-      &-correct {
-        color: green;
-      }
-    }
-
-  }
-
-  .content {
-    margin-top: 100px;
-
-    .roll {
-      &-word {
-        display: flex;
-        position: relative;
-        margin: auto;
-        padding: .5em 0 .5em 1em;
-        width: fit-content;
-        font-size: xx-large;
-        font-family: monospace;
-        border: thick solid #333;
-        color: #333;
-        letter-spacing: 1em;
-      }
-
-      &-letter {
-        .arrow {
-          position: absolute;
-          background: transparent;
-          font-size: xx-large;
-          margin-left: -.2em;
-
-          &-top {
-            top: -1.5em;
-          }
-
-          &-bottom {
-            bottom: -1.5em;
-          }
-        }
-      }
-    }
-
-    .check-word {
-      margin-top: 5em;
-
-      button {
-        border: 1px solid #333;
-        padding: .5em 1em;
-        font-size: 1em;
-
-        &:active {
-          background: #333;
-        }
-
-        &:disabled {
-          border-color: transparent;
-          opacity: .8;
-        }
-      }
-    }
-
-
-    .list-word {
-      margin-top: 15px;
-      overflow: auto;
-      max-height: 5em;
-      color: #a0a0a0;
-      display: flex;
-      flex-direction: column-reverse;
-
-      p:last-child {
-        color: #333;
-      }
-    }
-  }
-
-  .lose-page {
-    text-align: center;
-
-    img {
-      width: 60%;
-      margin: 20px auto;
-    }
-
+    input,
     button {
-      margin: auto;
-      display: block;
-      color: teal;
-      font-size: larger;
-      background: transparent;
-      border-bottom: 1px solid teal;
+      width: fit-content;
     }
   }
-
 }
