@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import * as gameFunctions from "../../utils/Game/GameFunctions";
+import * as constants from "../../utils/Game/Constants";
+
 function Game() {
 
   const [initWord, setInitWord] = useState(""); //Palabra inicial
@@ -6,19 +9,19 @@ function Game() {
   const [currentWord, setCurrentWord] = useState(''); //palabra cambiando
   const [listWords, setListWords] = useState([]) //Listado palabras completadas  
 
-  const [lifes, setLifes] = useState(0);
+  const [lifes, setLifes] = useState(3);
 
   const [isLoading, setLoading] = useState(false);
   const [userMsg, setUserMsg] = useState({ msg: '', type: 'error' });
 
   const [lastWordPosition, setLastWordPosition] = useState(-1);
 
-  const abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-  const words = ["rosas", "casa", "libro", "pelota", "codo", "color", "rosca", "mesa", "mono", "abogado"]
+  const abc = constants.abc
+  const words = constants.words
 
   useEffect(() => {
     restartGame()
-  }, [initWord]);
+  }, []);
 
   const changeLetter = (direction, positionWord, positionLetter) => {
     let countLetter = positionLetter
@@ -53,18 +56,16 @@ function Game() {
   }
 
   const restartGame = () => {
-    console.log("entro")
-    console.log(lifes)
+    console.log('jajaj')
     let max = words.length
     let min = 0
     let rn = Math.floor(Math.random() * (max - min)) + min
     let newWord = words[rn]
     setInitWord(newWord)
-    setCurrentWord(initWord.split(''))
-    setShowWord(initWord)
-    setListWords([initWord])
+    setCurrentWord(newWord.split(''))
+    setShowWord(newWord)
+    setListWords([newWord])
     setLifes(3)
-    console.log("salió")
   }
 
 
@@ -102,7 +103,7 @@ function Game() {
       }
     } else {
       showUserMsg('Ups, repetida', 'error')
-      resetWord()
+
       if (lifes !== 1) {
         setLifes(lifes - 1)
       }
