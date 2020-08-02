@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
@@ -6,6 +7,7 @@ import config from './../../config';
 
 function Home() {
 
+  const history = useHistory();
   const [rooms, setRooms] = useState()
   const [database, setDataBase] = useState()
   const [userName, setUserName] = useState()
@@ -44,6 +46,10 @@ function Home() {
     }
   }
 
+  const goSinglePlayer = () => {
+    history.push("/game")
+  }
+
   return (
     <div className="home">
       <div className="home-header">
@@ -51,29 +57,24 @@ function Home() {
         <p>Phonological Awareness</p>
       </div>
       <div className="home-inputs">
+        <div className="single-player">
+          <button type="button" onClick={goSinglePlayer}>Jugar solo</button>
+        </div>
 
         <div className="rooms-content">
           <div className="rooms-open">
             {rooms?.map((item, i) =>
               <div key={i}>
-                {item.name}<br />
-                {item.users.length}<br />
-                {item.initWord}
+                <h3>{item.name}</h3>
+                <p>{item.initWord}</p>
+                <p>{item.users.length}</p>
               </div>
             )}
           </div>
-          <div className="rooms-open">
-            <button type="button" onClick={getRooms}>Crear nueva sala</button>
-
+          <div className="rooms-new">
+            <button className="rooms-new-btn" type="button" onClick={getRooms}>Crear nueva sala</button>
           </div>
-
         </div>
-        <button type="button" onClick={getRooms}>Solitario</button>
-        <div className="modal modal-mode">
-
-        </div>
-
-
       </div>
 
     </div>

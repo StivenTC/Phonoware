@@ -14,4 +14,38 @@
       width: fit-content;
     }
   }
+
+  .rooms-content {
+    .rooms-open {
+      >div {
+        position: relative;
+        padding: .5em;
+        border: 1px solid #333;
+        text-align: left;
+
+        p {
+          font-size: smaller;
+        }
+      }
+    }
+
+    .rooms-new {
+      margin-top: 1em;
+      margin-bottom: 2em;
+
+      &-btn {
+        border: 1px dashed #333;
+        padding: .5em;
+      }
+    }
+  }
+
+  .single-player {
+
+    button {
+      border: 1px dashed #333;
+      padding: .5em;
+    }
+  }
+
 }
