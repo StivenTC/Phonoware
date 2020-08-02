@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as gameFunctions from "../../utils/Game/GameFunctions";
+import * as conections from "../../utils/Conection/Conection";
 import * as constants from "../../utils/Game/Constants";
 
 function Game() {
@@ -29,12 +30,14 @@ function Game() {
     let lastWord = listWords[listWords.length - 1]
     let originalLetter = lastWord.split('')[lastWordPosition]
 
+
+    //reset the word when the users changes the letter
     if (lastWordPosition !== positionWord) {
       newWord[lastWordPosition] = originalLetter
       setLastWordPosition(positionWord)
     }
 
-    if (direction !== 'top') {
+    if (direction === 'top') {
       countLetter--
       if (countLetter < 0)
         countLetter = abc.length - 1
@@ -43,16 +46,11 @@ function Game() {
       if (countLetter > abc.length - 1)
         countLetter = 0
     }
+
     setLastWordPosition(positionWord)
     newWord[positionWord] = abc[countLetter]
     setCurrentWord(newWord)
     setShowWord(currentWord.join(''))
-  }
-
-  const resetWord = () => {
-    let lastWord = listWords[listWords.length - 1]
-    setCurrentWord(lastWord.split(''))
-    setShowWord(lastWord)
   }
 
   const restartGame = () => {
@@ -69,13 +67,13 @@ function Game() {
   }
 
 
-  async function verifyWordRae() {
+  const verifyWordRae = () => {
     console.log(showWord)
-    const response = await fetch('https://cors-anywhere.herokuapp.com/https://dle.rae.es/' + showWord);
-    return await response.text();
+    let word = conections.verifyWordRae(showWord)
+    return word
   }
 
-  async function checkWord() {
+  async function checkWordRae() {
     setLoading(true)
     let arrayWords = listWords
 
@@ -122,7 +120,7 @@ function Game() {
         <h1>PhonoWare</h1>
         <div className="lifes">{
           [...Array(lifes)].map((item, i) =>
-            <span key={i}>♥</span>
+            <span key={i}>❤️</span>
           )}
         </div>
         <div className="count-words">{listWords.length - 1}</div>
@@ -158,14 +156,17 @@ function Game() {
             <div className="check-word">
               {isLoading ?
                 <p>Verificando...</p> :
-                <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWord}>Verificar</button>
+                <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWordRae}>Verificar</button>
               }
             </div>
           </div>
           <div className="list-word">
-            {listWords.map((item, i) =>
-              <p key={i}>{item}</p>
-            )}
+            <h3>{listWords[listWords.length - 1]}</h3>
+            <div className="list-word-list">
+              {listWords.map((item, i) =>
+                <p key={i}>{item}</p>
+              )}
+            </div>
           </div>
         </div>
       }
