@@ -50,31 +50,38 @@ function Home() {
     history.push("/game")
   }
 
+  const goRoom = (roomId) => {
+    history.push("/room=" + roomId)
+  }
+
   return (
     <div className="home">
       <div className="home-header">
         <h1>PhonoWare</h1>
         <p>Phonological Awareness</p>
+        <small>Cristian Padilla</small>
       </div>
       <div className="home-inputs">
         <div className="single-player">
-          <button type="button" onClick={goSinglePlayer}>Jugar solo</button>
+          {/* <button type="button" onClick={goSinglePlayer}>Jugar solo</button> */}
+          <button type="button" onClick={goSinglePlayer}>Play</button>
         </div>
 
-        <div className="rooms-content">
+        {/* <div className="rooms-content">
           <div className="rooms-open">
             {rooms?.map((item, i) =>
-              <div key={i}>
+              <button type="button" onClick={() => goRoom(item.id)} key={i}>
                 <h3>{item.name}</h3>
                 <p>{item.initWord}</p>
                 <p>{item.users.length}</p>
-              </div>
+              </button>
             )}
           </div>
           <div className="rooms-new">
             <button className="rooms-new-btn" type="button" onClick={getRooms}>Crear nueva sala</button>
           </div>
         </div>
+      */}
       </div>
 
     </div>

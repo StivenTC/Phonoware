@@ -21,7 +21,7 @@ function Game() {
   const words = constants.words
 
   useEffect(() => {
-    restartGame()
+    //restartGame()
   }, []);
 
   const changeLetter = (direction, positionWord, positionLetter) => {
@@ -53,12 +53,13 @@ function Game() {
     setShowWord(currentWord.join(''))
   }
 
-  const restartGame = () => {
+  const restartGame = (word) => {
     console.log('jajaj')
     let max = words.length
     let min = 0
     let rn = Math.floor(Math.random() * (max - min)) + min
-    let newWord = words[rn]
+    //let newWord = words[rn]
+    let newWord = word
     setInitWord(newWord)
     setCurrentWord(newWord.split(''))
     setShowWord(newWord)
@@ -66,13 +67,54 @@ function Game() {
     setLifes(3)
   }
 
+  const verifyWordEnglish = () => {
+    console.log(showWord)
+    let word = conections.verifyWordEnglish(showWord)
+    return word
+  }
+
+  async function checkWordEnglish() {
+    setLoading(true)
+    let arrayWords = listWords
+
+    if (!listWords.includes(showWord)) {
+
+      let response = await verifyWordEnglish()
+      response = response.substring(response.search('<title>'), response.search('</title>'))
+      console.log(response, '...')
+
+      if (!response.includes('Did you spell it correctly?')) {
+        arrayWords.push(showWord)
+        setListWords(arrayWords)
+        //setInitWord(showWord)
+        if (Number.isInteger((listWords.length - 1) / 40)) {
+          showUserMsg('¡Correct! Take a new life', 'correct')
+          setLifes(lifes + 1)
+        } else {
+          showUserMsg('¡Correcto!', 'correct')
+        }
+      } else {
+        if (lifes > 0) {
+          showUserMsg('Nope, -1 vida ', 'error')
+          setLifes(lifes - 1)
+        }
+        setInitWord(listWords[listWords.length - 1])
+      }
+    } else {
+      showUserMsg('Ups, repetida', 'error')
+
+      if (lifes !== 1) {
+        setLifes(lifes - 1)
+      }
+    }
+    setLoading(false)
+  }
 
   const verifyWordRae = () => {
     console.log(showWord)
     let word = conections.verifyWordRae(showWord)
     return word
   }
-
   async function checkWordRae() {
     setLoading(true)
     let arrayWords = listWords
@@ -132,45 +174,56 @@ function Game() {
           <p>Perdiste</p>
           {/* <img src={require('../../assets/fail.jpeg')} alt="fail" /> */}
           <br />
-          <button type="button" onClick={restartGame}>Otra vez</button>
+          <button type="button" onClick={() => { setShowWord(''); setLifes(1) }}>Otra vez</button>
         </div> :
-
-        <div className="content">
-          <div className="roll-word">
-            {[...Array(initWord.length)].map((e, i) =>
-              <div className="roll-letter" key={i}>
-                {
-                  abc.map((item, j) =>
-                    currentWord[i] === item &&
-                    <div key={j}>
-                      <button type="button" disabled={isLoading} className="arrow arrow-top" onClick={() => changeLetter('top', i, j)}>▲</button>
-                      <button type="button" disabled={isLoading} className="arrow arrow-bottom" onClick={() => changeLetter('bottom', i, j)}>▼</button>
-                      <span>{item}</span>
-                    </div>
-                  )}
+        showWord === '' ?
+          <div className="modal">
+            <div className="modal-content">
+              <h2>Please select a word to start</h2>
+              <div>
+                {words.map((item, j) =>
+                  <button onClick={() => restartGame(item)} >{item}</button>
+                )
+                }
               </div>
-
-            )}
-          </div>
-          <div className="check-content">
-            <div className="check-word">
-              {isLoading ?
-                <p>Verificando...</p> :
-                <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWordRae}>Verificar</button>
-              }
             </div>
           </div>
-          <div className="list-word">
-            <h3>{listWords[listWords.length - 1]}</h3>
-            <div className="list-word-list">
-              {listWords.map((item, i) =>
-                <p key={i}>{item}</p>
+          : <div className="content">
+            <div className="roll-word">
+              {[...Array(initWord.length)].map((e, i) =>
+                <div className="roll-letter" key={i}>
+                  {
+                    abc.map((item, j) =>
+                      currentWord[i] === item &&
+                      <div key={j}>
+                        <button type="button" disabled={isLoading} className="arrow arrow-top" onClick={() => changeLetter('top', i, j)}>▲</button>
+                        <button type="button" disabled={isLoading} className="arrow arrow-bottom" onClick={() => changeLetter('bottom', i, j)}>▼</button>
+                        <span>{item}</span>
+                      </div>
+                    )}
+                </div>
+
               )}
             </div>
+            <div className="check-content">
+              <div className="check-word">
+                {isLoading ?
+                  <p>Verificando...</p> :
+                  <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWordEnglish}>Verificar</button>
+                }
+              </div>
+            </div>
+            <div className="list-word">
+              <h3>{listWords[listWords.length - 1]}</h3>
+              <div className="list-word-list">
+                {listWords.map((item, i) =>
+                  <p key={i}>{item}</p>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
       }
-    </div>
+    </div >
   );
 }
 

@@ -147,4 +147,36 @@
     }
   }
 
+  .modal {
+    position: absolute;
+    background: #0000003a;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    &-content {
+      margin-top: 30%;
+      background: white;
+      padding: 2em 1em;
+
+      >div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1em;
+
+        button {
+          width: 100px;
+          height: 20px;
+          border: 1px solid #333;
+          margin-top: .5em;
+        }
+      }
+    }
+  }
+
 }
