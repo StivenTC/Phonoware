@@ -59,7 +59,9 @@ function Home() {
       <div className="home-header">
         <h1>PhonoWare</h1>
         <p>Phonological Awareness</p>
-        <small>Cristian Padilla</small>
+        <small>Designed by Cristian Blanco <br />
+        Developed by Stiven Tovar
+        </small>
       </div>
       <div className="home-inputs">
         <div className="single-player">

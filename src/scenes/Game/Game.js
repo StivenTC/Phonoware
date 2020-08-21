@@ -91,17 +91,17 @@ function Game() {
           showUserMsg('¡Correct! Take a new life', 'correct')
           setLifes(lifes + 1)
         } else {
-          showUserMsg('¡Correcto!', 'correct')
+          showUserMsg('¡It is correct!', 'correct')
         }
       } else {
         if (lifes > 0) {
-          showUserMsg('Nope, -1 vida ', 'error')
+          showUserMsg('Nope, -1 heart ', 'error')
           setLifes(lifes - 1)
         }
         setInitWord(listWords[listWords.length - 1])
       }
     } else {
-      showUserMsg('Ups, repetida', 'error')
+      showUserMsg('Ups, repeated', 'error')
 
       if (lifes !== 1) {
         setLifes(lifes - 1)
@@ -171,10 +171,10 @@ function Game() {
       </div>
       {lifes === 0 ?
         <div className="lose-page">
-          <p>Perdiste</p>
+          <p>Game over</p>
           {/* <img src={require('../../assets/fail.jpeg')} alt="fail" /> */}
           <br />
-          <button type="button" onClick={() => { setShowWord(''); setLifes(1) }}>Otra vez</button>
+          <button type="button" onClick={() => { setShowWord(''); setLifes(1) }}>Again</button>
         </div> :
         showWord === '' ?
           <div className="modal">
@@ -208,8 +208,8 @@ function Game() {
             <div className="check-content">
               <div className="check-word">
                 {isLoading ?
-                  <p>Verificando...</p> :
-                  <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWordEnglish}>Verificar</button>
+                  <p>Verifying...</p> :
+                  <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWordEnglish}>Verify</button>
                 }
               </div>
             </div>

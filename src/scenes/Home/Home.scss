@@ -5,6 +5,7 @@
     overflow: auto;
 
     h1 {
+      font-size: larger;
       margin-top: 3em;
     }
 
@@ -13,11 +14,11 @@
     }
 
     small {
+      display: block;
+      line-height: 1.5em;
+      margin-top: 3em;
       font-size: xx-small;
       opacity: .5;
-      position: absolute;
-      bottom: 1em;
-      left: 2em;
     }
   }
 
