@@ -59,14 +59,14 @@ function Home() {
       <div className="home-header">
         <h1>PhonoWare</h1>
         <p>Phonological Awareness</p>
-        <small>Designed by Cristian Blanco <br />
+        {/* <small>Designed by Cristian Blanco <br />
         Developed by Stiven Tovar
-        </small>
+        </small> */}
       </div>
       <div className="home-inputs">
         <div className="single-player">
           {/* <button type="button" onClick={goSinglePlayer}>Jugar solo</button> */}
-          <button type="button" onClick={goSinglePlayer}>Play</button>
+          <button type="button" onClick={goSinglePlayer}>Jugar</button>
         </div>
 
         {/* <div className="rooms-content">
