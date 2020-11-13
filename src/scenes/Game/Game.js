@@ -8,6 +8,7 @@ function Game() {
   const [initWord, setInitWord] = useState(""); //Palabra inicial
   const [showWord, setShowWord] = useState(''); //Palabra mostrada para render
   const [currentWord, setCurrentWord] = useState(''); //palabra cambiando
+  const [nWord, setnWord] = useState(''); //palabra cambiando
   const [listWords, setListWords] = useState([]) //Listado palabras completadas  
 
   const [lifes, setLifes] = useState(3);
@@ -54,7 +55,6 @@ function Game() {
   }
 
   const restartGame = (word) => {
-    console.log('jajaj')
     let max = words.length
     let min = 0
     let rn = Math.floor(Math.random() * (max - min)) + min
@@ -65,6 +65,10 @@ function Game() {
     setShowWord(newWord)
     setListWords([newWord])
     setLifes(3)
+  }
+
+  const newWord = (e) => {
+    setnWord(e.target.value)
   }
 
   const verifyWordEnglish = () => {
@@ -171,7 +175,7 @@ function Game() {
       </div>
       {lifes === 0 ?
         <div className="lose-page">
-          <p>Game over</p>
+          <p>¡Perdiste!</p>
           {/* <img src={require('../../assets/fail.jpeg')} alt="fail" /> */}
           <br />
           <button type="button" onClick={() => { setShowWord(''); setLifes(1) }}>Again</button>
@@ -179,12 +183,17 @@ function Game() {
         showWord === '' ?
           <div className="modal">
             <div className="modal-content">
-              <h2>Please select a word to start</h2>
+              <h2>Escoge tu palabra inicial</h2>
               <div>
                 {words.map((item, j) =>
-                  <button onClick={() => restartGame(item)} >{item}</button>
-                )
-                }
+                  <button key={j} onClick={() => restartGame(item)} >{item}</button>
+                )}
+              </div>
+              <div>
+                <form className="new-word-form">
+                  <input type="text" name="nword" maxLength={7} onChange={(e) => newWord(e)} placeholder="Palabra propia" />
+                  <input type="submit" value="Nueva" onClick={() => restartGame(nWord)} />
+                </form>
               </div>
             </div>
           </div>
@@ -208,8 +217,8 @@ function Game() {
             <div className="check-content">
               <div className="check-word">
                 {isLoading ?
-                  <p>Verifying...</p> :
-                  <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWordEnglish}>Verify</button>
+                  <p>Verificando...</p> :
+                  <button type="button" disabled={showWord === listWords[listWords.length - 1] || isLoading} onClick={checkWordRae}>Verificar</button>
                 }
               </div>
             </div>
